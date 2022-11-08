@@ -1,0 +1,343 @@
+' Gambas class file
+
+Private $Checksum As String
+Private $Bytes As String[]
+Property Read MailType As Integer
+Property Read DoungeonID As Integer
+Property Read Floar As Integer
+Property Read Unkown As Integer
+Property Read PokemonToResID As Integer
+Property Read MailID As Integer
+Property Read PokemonNick As String
+Property Read Unkown2Thankyou As Integer
+Property Read RewardItemOnlyThankyou As Integer
+Property Read Unkown3 As Integer
+Property Read ressID As Long
+Property Read helpTeamID As Long
+Property Read ressChange As Integer
+Property Read Unkown4 As Integer
+Property Read Checksum As Integer
+Property Read Dougeon As String[]
+
+Public Sub _new(SOSLetter As String)
+
+  Dim pass As String[]
+
+  pass = MAll.fromCodeToPassToBit(SOSLetter)
+
+  If MAll.CalcCkecksum(pass)
+
+    $Checksum = pass[0]
+    pass.Remove(0)
+    $Bytes = pass
+  Else
+    Message.Error("The Code is not correct")
+    $Checksum = "11111"
+  Endif
+
+End
+
+Private Function MailID_Read() As Integer
+
+  Dim s1 As String
+  Dim r As String
+  Dim i As Integer
+
+  r = ""
+
+  s1 = Right($Bytes[8], 3) & Left($Bytes[7], 5) & Right($Bytes[7], 3) & Left($Bytes[6], 5)
+
+  If Right$(Left$(s1, 1)) = "1" Then i += 32768
+  If Right$(Left$(s1, 2)) = "1" Then i += 16384
+  If Right$(Left$(s1, 3)) = "1" Then i += 8192
+  If Right$(Left$(s1, 4)) = "1" Then i += 4096
+  If Right$(Left$(s1, 5)) = "1" Then i += 2048
+  If Right$(Left$(s1, 6)) = "1" Then i += 1024
+  If Right$(Left$(s1, 7)) = "1" Then i += 512
+  If Right$(Left$(s1, 8)) = "1" Then i += 256
+  If Right$(Left$(s1, 9)) = "1" Then i += 128
+  If Right$(Left$(s1, 10)) = "1" Then i += 64
+  If Right$(Left$(s1, 11)) = "1" Then i += 32
+  If Right$(Left$(s1, 12)) = "1" Then i += 16
+  If Right$(Left$(s1, 13)) = "1" Then i += 8
+  If Right$(Left$(s1, 14)) = "1" Then i += 4
+  If Right$(Left$(s1, 15)) = "1" Then i += 2
+  If Right$(Left$(s1, 16)) = "1" Then i += 1
+  i %= 10000
+
+  Return i
+
+End
+
+Private Function DoungeonID_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[1], 3) & Left($Bytes[0], 4)
+  If Right$(Left$(s, 1)) = "1" Then i += 64
+  If Right$(Left$(s, 2)) = "1" Then i += 32
+  If Right$(Left$(s, 3)) = "1" Then i += 16
+  If Right$(Left$(s, 4)) = "1" Then i += 8
+  If Right$(Left$(s, 5)) = "1" Then i += 4
+  If Right$(Left$(s, 6)) = "1" Then i += 2
+  If Right$(Left$(s, 7)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function Floar_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[2], 2) & Left($Bytes[1], 5)
+  If Right$(Left$(s, 1)) = "1" Then i += 64
+  If Right$(Left$(s, 2)) = "1" Then i += 32
+  If Right$(Left$(s, 3)) = "1" Then i += 16
+  If Right$(Left$(s, 4)) = "1" Then i += 8
+  If Right$(Left$(s, 5)) = "1" Then i += 4
+  If Right$(Left$(s, 6)) = "1" Then i += 2
+  If Right$(Left$(s, 7)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function PokemonToResID_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[6], 3) & Left($Bytes[5], 6)
+  If Right$(Left$(s, 1)) = "1" Then i += 256
+  If Right$(Left$(s, 2)) = "1" Then i += 128
+  If Right$(Left$(s, 3)) = "1" Then i += 64
+  If Right$(Left$(s, 4)) = "1" Then i += 32
+  If Right$(Left$(s, 5)) = "1" Then i += 16
+  If Right$(Left$(s, 6)) = "1" Then i += 8
+  If Right$(Left$(s, 7)) = "1" Then i += 4
+  If Right$(Left$(s, 8)) = "1" Then i += 2
+  If Right$(Left$(s, 9)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function MailType_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[0], 4)
+  If Right$(Left$(s, 1)) = "1" Then i += 8
+  If Right$(Left$(s, 2)) = "1" Then i += 4
+  If Right$(Left$(s, 3)) = "1" Then i += 2
+  If Right$(Left$(s, 4)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function PokemonNick_Read() As String
+
+  Dim ss As New String[]
+
+  Dim s As String
+  Dim i As Integer
+  Dim r As String
+
+  s = Right($Bytes[11], 3) & Left($Bytes[10], 5)
+  ss.Add(s)
+  s = Right($Bytes[12], 3) & Left($Bytes[11], 5)
+  ss.Add(s)
+  s = Right($Bytes[13], 3) & Left($Bytes[12], 5)
+  ss.Add(s)
+  s = Right($Bytes[14], 3) & Left($Bytes[13], 5)
+  ss.Add(s)
+  s = Right($Bytes[15], 3) & Left($Bytes[14], 5)
+  ss.Add(s)
+  s = Right($Bytes[16], 3) & Left($Bytes[15], 5)
+  ss.Add(s)
+  s = Right($Bytes[17], 3) & Left($Bytes[16], 5)
+  ss.Add(s)
+  s = Right($Bytes[18], 3) & Left($Bytes[17], 5)
+  ss.Add(s)
+  s = Right($Bytes[19], 3) & Left($Bytes[18], 5)
+  ss.Add(s)
+  s = Right($Bytes[20], 3) & Left($Bytes[19], 5)
+  ss.Add(s)
+
+  For Each s In ss
+    i = 0
+    If Right$(Left$(s, 1)) = "1" Then i += 128
+    If Right$(Left$(s, 2)) = "1" Then i += 64
+    If Right$(Left$(s, 3)) = "1" Then i += 32
+    If Right$(Left$(s, 4)) = "1" Then i += 16
+    If Right$(Left$(s, 5)) = "1" Then i += 8
+    If Right$(Left$(s, 6)) = "1" Then i += 4
+    If Right$(Left$(s, 7)) = "1" Then i += 2
+    If Right$(Left$(s, 8)) = "1" Then i += 1
+    If i = 0 Then Break
+    r &= Chr(i)
+
+  Next
+  Return r
+
+End
+
+Private Function Unkown2Thankyou_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[21], 3) & Left($Bytes[20], 5)
+  If Right$(Left$(s, 1)) = "1" Then i += 128
+  If Right$(Left$(s, 2)) = "1" Then i += 64
+  If Right$(Left$(s, 3)) = "1" Then i += 32
+  If Right$(Left$(s, 4)) = "1" Then i += 16
+  If Right$(Left$(s, 5)) = "1" Then i += 8
+  If Right$(Left$(s, 6)) = "1" Then i += 4
+  If Right$(Left$(s, 7)) = "1" Then i += 2
+  If Right$(Left$(s, 8)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function RewardItemOnlyThankyou_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[22], 3) & Left($Bytes[21], 5)
+  If Right$(Left$(s, 1)) = "1" Then i += 128
+  If Right$(Left$(s, 2)) = "1" Then i += 64
+  If Right$(Left$(s, 3)) = "1" Then i += 32
+  If Right$(Left$(s, 4)) = "1" Then i += 16
+  If Right$(Left$(s, 5)) = "1" Then i += 8
+  If Right$(Left$(s, 6)) = "1" Then i += 4
+  If Right$(Left$(s, 7)) = "1" Then i += 2
+  If Right$(Left$(s, 8)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function Unkown3_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[23], 3) & Left($Bytes[22], 5)
+  If Right$(Left$(s, 1)) = "1" Then i += 128
+  If Right$(Left$(s, 2)) = "1" Then i += 64
+  If Right$(Left$(s, 3)) = "1" Then i += 32
+  If Right$(Left$(s, 4)) = "1" Then i += 16
+  If Right$(Left$(s, 5)) = "1" Then i += 8
+  If Right$(Left$(s, 6)) = "1" Then i += 4
+  If Right$(Left$(s, 7)) = "1" Then i += 2
+  If Right$(Left$(s, 8)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function ressID_Read() As Long
+
+  Dim s As String
+  Dim s1 As String
+  Dim s4 As String
+  Dim s2 As String
+  Dim s3 As String
+  Dim r As String
+  Dim i As Integer
+  Dim ri As Long
+
+  r = ""
+
+  s1 = Right($Bytes[24], 3) & Left($Bytes[23], 5)
+  s2 = Right($Bytes[25], 3) & Left($Bytes[24], 5)
+  s3 = Right($Bytes[26], 3) & Left($Bytes[25], 5)
+  s4 = Right($Bytes[27], 3) & Left($Bytes[26], 5)
+
+  s = s4 & s3 & s2 & s1
+  For i = s.len - 1 DownTo 0
+
+    r = Left(Right(s, i + 1))
+    If r = "1" Then ri += 2 ^ i
+  Next
+
+  Return ri
+
+End
+
+Private Function helpTeamID_Read() As Long
+
+  Dim s As String
+  Dim s1 As String
+  Dim s4 As String
+  Dim s2 As String
+  Dim s3 As String
+  Dim r As String
+  Dim i As Integer
+  Dim ri As Long
+
+  r = ""
+
+  s1 = Right($Bytes[28], 3) & Left($Bytes[27], 5)
+  s2 = Right($Bytes[29], 3) & Left($Bytes[28], 5)
+  s3 = Right($Bytes[30], 3) & Left($Bytes[29], 5)
+  s4 = Right($Bytes[31], 3) & Left($Bytes[30], 5)
+
+  s = s4 & s3 & s2 & s1
+  For i = s.len - 1 DownTo 0
+
+    r = Left(Right(s, i + 1))
+    If r = "1" Then ri += 2 ^ i
+  Next
+
+  Return ri
+
+End
+
+Private Function ressChange_Read() As Integer
+
+  Dim s As String
+  Dim i As Integer
+
+  s = Right($Bytes[32], 2) & Left($Bytes[31], 5)
+  If Right$(Left$(s, 1)) = "1" Then i += 64
+  If Right$(Left$(s, 2)) = "1" Then i += 32
+  If Right$(Left$(s, 3)) = "1" Then i += 16
+  If Right$(Left$(s, 4)) = "1" Then i += 8
+  If Right$(Left$(s, 5)) = "1" Then i += 4
+  If Right$(Left$(s, 6)) = "1" Then i += 2
+  If Right$(Left$(s, 7)) = "1" Then i += 1
+  Return i
+
+End
+
+Private Function Unkown4_Read() As Integer
+
+End
+
+Private Function Unkown_Read() As Integer
+
+End
+
+Private Function Checksum_Read() As Integer
+
+  Dim i As Integer
+  Dim ri As Integer
+  Dim r As String
+
+  For i = $Checksum.len - 1 DownTo 0
+
+    r = Left(Right($Checksum, i + 1))
+    If r = "1" Then ri += 2 ^ i
+
+  Next
+  Return ri
+
+End
+
+Private Function Dougeon_Read() As String[]
+
+  Return ["Tiny Woods", "Thunderwave Cave", "Mt. Steel", "Sinister Woods", "Silent Chasm", "Mt. Thunder", "Mt. Thunder Peak", "Great Canyon", "Lapis Cave", "Mt. Blaze", "Mt. Blaze Peak", "Frosty Forest", "Frosty Grotto", "Mt. Freeze", "Mt. Freeze Peak", "Magma Cavern", "Magma Cavern Pit", "Sky Tower", "Sky Tower Summit", "Stormy Sea", "Silver Trench", "Meteor Cave", "Mt. Freeze Peak", "Western Cave", "Boss 3", "Boss 4", "Wish Cave", "Buried Relic", "Pitfall Valley", "Northern Range", "Boss 9", "Desert Region", "Southern Cavern", "Wyvern Hill", "Fiery Field", "Northwind Field", "Solar Cave", "Lightning Field", "Darknight Relic", "Wondrous Sea", "Murky Cave", "Grand Sea", "Uproar Forest", "Oddity Cave", "Remains Island", "Marvelous Sea", "Fantasy Strait", "Rock Path", "Snow Path", "Autopilot", "D50", "D51", "Dojo Registration", "Howling Forest", "D54", "Fantasy Strait", "Waterfall Pond", "Unown Relic", "Joyous Tower", "Far-off Sea", "Mt. Faraway", "D61", "Purity Forest", "Out on Rescue", "???", "Tiny Woods", "Unknown World", "Frosty Grotto", "Howling Forest", "Pokémon Square", "Pokémon Square", "Rescue Team Base", "Rescue Team Base", "****agb-slot ", "Client Pokémon", "Normal Maze", "Fire Maze", "Water Maze", "Grass Maze", "Electric Maze", "Ice Maze", "Fighting Maze", "Ground Maze", "Flying Maze", "Psychic Maze", "Poison Maze", "Bug Maze", "Rock Maze", "Ghost Maze", "Dragon Maze", "Dark Maze", "Steel Maze", "Team Shifty", "Team Constrictor", "Team Hydro", "Team Rumblerock", "Rescue Team 2", "Rescue Team Maze"]
+
+End

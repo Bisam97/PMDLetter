@@ -1,0 +1,53 @@
+' Gambas module file
+
+Public Sub Main()
+
+  Dim s As String[]
+  Dim a As String
+  Dim i As Byte
+  Dim bits As New String[]
+  Dim u As String[]
+  Dim b As Byte[]
+  Dim ls As String
+  Dim dtest As SOTLetter
+
+  ' ls = "N 7 ? ? 2 R R 0 6 . # ? ? H 0 9 ? ! ? % ? ? ? ? N F C ? ? S ? ? 6 3 H ? ? ? X ? X P 2 ? ? 5 P ? ? T Y 0 R ."
+  ' ls = "6 6 ? ? 9 P R T J + % ? ? F Y N ? H % 8 ? ? ? ? ? S Q 5 ? 8 ? C X R H ? ? ? X ? K J 1 M ? 6 Q ? ? F 9 T H ."
+  ' ls = "N W ? ? 2 P ? Y 3 M # ? ? Y 0 9 ? ! ? H ? ? 4 ? N F C ? ? F ? ? 8 3 H ? ? ? X ? F + C ? ? 5 % ? ? % F 0 3 ."
+  ls = "6H??7PYX?+%??J7C?H%#?????FF1?F?C2PH???X?KC?M?6Q??79TH."
+  s = New String[]
+  Print ls.len
+  For i = ls.len DownTo 1
+
+    a = Left(Right(ls, i))
+    If a Then
+      If a = " " Then
+
+      Else
+
+        s.Add(a)
+      Endif
+    Endif
+  Next
+
+  s = MSOSConst.toPassSOSforming(s)
+  For Each a In s
+    i = MAll.charToNummber(a)
+    a = MAll.NummberTo5Bit(i)
+    bits.Add(a)
+  Next
+  u = MAll.calc5BitTo15BytePass(bits)
+  b = MAll.calcToByte(u)
+  Print MAll.CalcCkecksum(u)
+  dtest = New SOTLetter(u)
+
+  Print dtest.MailType
+  Print dtest.Dougeon[dtest.DoungeonID]
+  Print dtest.Floar
+  Print MAll.Pokemon[dtest.PokemonToResID]
+  Print dtest.MailID
+  Print dtest.PokemonNick
+  Print dtest.ressID
+  Print dtest.ressChange
+
+End

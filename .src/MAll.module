@@ -1,0 +1,693 @@
+' Gambas module file
+
+Public Sub fromCodeToPassToBit(Letter As String) As String[]
+
+  Dim a As String
+  Dim s As String[]
+  Dim bits As String[]
+
+  Dim i As Byte
+
+  s = []
+  bits = []
+  For i = letter.len DownTo 1
+
+    a = Left(Right(letter, i))
+    If a Then
+      If a = " " Then
+
+      Else
+
+        s.Add(a)
+      Endif
+    Endif
+  Next
+
+  s = MSOSConst.toPassSOSforming(s)
+  For Each a In s
+    i = MAll.charToNummber(a)
+    a = MAll.NummberTo5Bit(i)
+    bits.Add(a)
+  Next
+
+  Return MAll.calc5BitTo15BytePass(bits)
+
+End
+
+Public Pokemon As String[] = [
+  "??????????",
+  "Bulbasaur",
+  "Ivysaur",
+  "Venusaur",
+  "Charmander",
+  "Charmeleon",
+  "Charizard",
+  "Squirtle",
+  "Wartortle",
+  "Blastoise",
+  "Caterpie",
+  "Metapod",
+  "Butterfree",
+  "Weedle",
+  "Kakuna",
+  "Beedrill",
+  "Pidgey",
+  "Pidgeotto",
+  "Pidgeot",
+  "Rattata",
+  "Raticate",
+  "Spearow",
+  "Fearow",
+  "Ekans",
+  "Arbok",
+  "Pikachu",
+  "Raichu",
+  "Sandshrew",
+  "Sandslash",
+  "Nidoran&#x2640;",
+  "Nidorina",
+  "Nidoqueen",
+  "Nidoran&#x2642;",
+  "Nidorino",
+  "Nidoking",
+  "Clefairy",
+  "Clefable",
+  "Vulpix",
+  "Ninetales",
+  "Jigglypuff",
+  "Wigglytuff",
+  "Zubat",
+  "Golbat",
+  "Oddish",
+  "Gloom",
+  "Vileplume",
+  "Paras",
+  "Parasect",
+  "Venonat",
+  "Venomoth",
+  "Diglett",
+  "Dugtrio",
+  "Meowth",
+  "Persian",
+  "Psyduck",
+  "Golduck",
+  "Mankey",
+  "Primeape",
+  "Growlithe",
+  "Arcanine",
+  "Poliwag",
+  "Poliwhirl",
+  "Poliwrath",
+  "Abra",
+  "Kadabra",
+  "Alakazam",
+  "Machop",
+  "Machoke",
+  "Machamp",
+  "Bellsprout",
+  "Weepinbell",
+  "Victreebel",
+  "Tentacool",
+  "Tentacruel",
+  "Geodude",
+  "Graveler",
+  "Golem",
+  "Ponyta",
+  "Rapidash",
+  "Slowpoke",
+  "Slowbro",
+  "Magnemite",
+  "Magneton",
+  "Farfetch'd",
+  "Doduo",
+  "Dodrio",
+  "Seel",
+  "Dewgong",
+  "Grimer",
+  "Muk",
+  "Shellder",
+  "Cloyster",
+  "Gastly",
+  "Haunter",
+  "Gengar",
+  "Onix",
+  "Drowzee",
+  "Hypno",
+  "Krabby",
+  "Kingler",
+  "Voltorb",
+  "Electrode",
+  "Exeggcute",
+  "Exeggutor",
+  "Cubone",
+  "Marowak",
+  "Hitmonlee",
+  "Hitmonchan",
+  "Lickitung",
+  "Koffing",
+  "Weezing",
+  "Rhyhorn",
+  "Rhydon",
+  "Chansey",
+  "Tangela",
+  "Kangaskhan",
+  "Horsea",
+  "Seadra",
+  "Goldeen",
+  "Seaking",
+  "Staryu",
+  "Starmie",
+  "Mr. Mime",
+  "Scyther",
+  "Jynx",
+  "Electabuzz",
+  "Magmar",
+  "Pinsir",
+  "Tauros",
+  "Magikarp",
+  "Gyarados",
+  "Lapras",
+  "Ditto",
+  "Eevee",
+  "Vaporeon",
+  "Jolteon",
+  "Flareon",
+  "Porygon",
+  "Omanyte",
+  "Omastar",
+  "Kabuto",
+  "Kabutops",
+  "Aerodactyl",
+  "Snorlax",
+  "Articuno",
+  "Zapdos",
+  "Moltres",
+  "Dratini",
+  "Dragonair",
+  "Dragonite",
+  "Mewtwo",
+  "Mew",
+  "Chikorita",
+  "Bayleef",
+  "Meganium",
+  "Cyndaquil",
+  "Quilava",
+  "Typhlosion",
+  "Totodile",
+  "Croconaw",
+  "Feraligatr",
+  "Sentret",
+  "Furret",
+  "Hoothoot",
+  "Noctowl",
+  "Ledyba",
+  "Ledian",
+  "Spinarak",
+  "Ariados",
+  "Crobat",
+  "Chinchou",
+  "Lanturn",
+  "Pichu",
+  "Cleffa",
+  "Igglybuff",
+  "Togepi",
+  "Togetic",
+  "Natu",
+  "Xatu",
+  "Mareep",
+  "Flaaffy",
+  "Ampharos",
+  "Bellossom",
+  "Marill",
+  "Azumarill",
+  "Sudowoodo",
+  "Politoed",
+  "Hoppip",
+  "Skiploom",
+  "Jumpluff",
+  "Aipom",
+  "Sunkern",
+  "Sunflora",
+  "Yanma",
+  "Wooper",
+  "Quagsire",
+  "Espeon",
+  "Umbreon",
+  "Murkrow",
+  "Slowking",
+  "Misdreavus",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Unown",
+  "Wobbuffet",
+  "Girafarig",
+  "Pineco",
+  "Forretress",
+  "Dunsparce",
+  "Gligar",
+  "Steelix",
+  "Snubbull",
+  "Granbull",
+  "Qwilfish",
+  "Scizor",
+  "Shuckle",
+  "Heracross",
+  "Sneasel",
+  "Teddiursa",
+  "Ursaring",
+  "Slugma",
+  "Magcargo",
+  "Swinub",
+  "Piloswine",
+  "Corsola",
+  "Remoraid",
+  "Octillery",
+  "Delibird",
+  "Mantine",
+  "Skarmory",
+  "Houndour",
+  "Houndoom",
+  "Kingdra",
+  "Phanpy",
+  "Donphan",
+  "Porygon2",
+  "Stantler",
+  "Smeargle",
+  "Tyrogue",
+  "Hitmontop",
+  "Smoochum",
+  "Elekid",
+  "Magby",
+  "Miltank",
+  "Blissey",
+  "Raikou",
+  "Entei",
+  "Suicune",
+  "Larvitar",
+  "Pupitar",
+  "Tyranitar",
+  "Lugia",
+  "Ho-Oh",
+  "Celebi",
+  "Treecko",
+  "Grovyle",
+  "Sceptile",
+  "Torchic",
+  "Combusken",
+  "Blaziken",
+  "Mudkip",
+  "Marshtomp",
+  "Swampert",
+  "Poochyena",
+  "Mightyena",
+  "Zigzagoon",
+  "Linoone",
+  "Wurmple",
+  "Silcoon",
+  "Beautifly",
+  "Cascoon",
+  "Dustox",
+  "Lotad",
+  "Lombre",
+  "Ludicolo",
+  "Seedot",
+  "Nuzleaf",
+  "Shiftry",
+  "Taillow",
+  "Swellow",
+  "Wingull",
+  "Pelipper",
+  "Ralts",
+  "Kirlia",
+  "Gardevoir",
+  "Surskit",
+  "Masquerain",
+  "Shroomish",
+  "Breloom",
+  "Slakoth",
+  "Vigoroth",
+  "Slaking",
+  "Nincada",
+  "Ninjask",
+  "Shedinja",
+  "Whismur",
+  "Loudred",
+  "Exploud",
+  "Makuhita",
+  "Hariyama",
+  "Azurill",
+  "Nosepass",
+  "Skitty",
+  "Delcatty",
+  "Sableye",
+  "Mawile",
+  "Aron",
+  "Lairon",
+  "Aggron",
+  "Meditite",
+  "Medicham",
+  "Electrike",
+  "Manectric",
+  "Plusle",
+  "Minun",
+  "Volbeat",
+  "Illumise",
+  "Roselia",
+  "Gulpin",
+  "Swalot",
+  "Carvanha",
+  "Sharpedo",
+  "Wailmer",
+  "Wailord",
+  "Numel",
+  "Camerupt",
+  "Torkoal",
+  "Spoink",
+  "Grumpig",
+  "Spinda",
+  "Trapinch",
+  "Vibrava",
+  "Flygon",
+  "Cacnea",
+  "Cacturne",
+  "Swablu",
+  "Altaria",
+  "Zangoose",
+  "Seviper",
+  "Lunatone",
+  "Solrock",
+  "Barboach",
+  "Whiscash",
+  "Corphish",
+  "Crawdaunt",
+  "Baltoy",
+  "Claydol",
+  "Lileep",
+  "Cradily",
+  "Anorith",
+  "Armaldo",
+  "Feebas",
+  "Milotic",
+  "Castform",
+  "Castform",
+  "Castform",
+  "Castform",
+  "Kecleon",
+  "Shuppet",
+  "Banette",
+  "Duskull",
+  "Dusclops",
+  "Tropius",
+  "Chimecho",
+  "Absol",
+  "Wynaut",
+  "Snorunt",
+  "Glalie",
+  "Spheal",
+  "Sealeo",
+  "Walrein",
+  "Clamperl",
+  "Huntail",
+  "Gorebyss",
+  "Relicanth",
+  "Luvdisc",
+  "Bagon",
+  "Shelgon",
+  "Salamence",
+  "Beldum",
+  "Metang",
+  "Metagross",
+  "Regirock",
+  "Regice",
+  "Registeel",
+  "Latias",
+  "Latios",
+  "Kyogre",
+  "Groudon",
+  "Rayquaza",
+  "Jirachi",
+  "Deoxys",
+  "Unown",
+  "Unown",
+  "Deoxys",
+  "Deoxys",
+  "Deoxys",
+  "Munchlax",
+  "Decoy",
+  "Statue",
+  "Rayquaza"
+]
+
+Public Sub NummberTo5Bit(n As Byte) As String
+
+  Dim b1 As Boolean
+  Dim b2 As Boolean
+  Dim b3 As Boolean
+  Dim b4 As Boolean
+  Dim b5 As Boolean
+  Dim s As String
+
+  If n > 31 Then Return "00000"
+
+  While n > 0
+    n -= 1
+    If b1 Then
+      If b2 Then
+        If b3 Then
+          If b4 Then
+            b1 = False
+            b2 = False
+            b3 = False
+            b4 = False
+            b5 = True
+
+          Else
+
+            b4 = True
+          Endif
+          b1 = False
+          b2 = False
+          b3 = False
+
+        Else
+          b3 = True
+        Endif
+        b1 = False
+        b2 = False
+
+      Else
+        b2 = True
+      Endif
+      b1 = False
+    Else
+      b1 = True
+    Endif
+  Wend
+
+  If b5 Then
+    s &= "1"
+  Else
+    s &= "0"
+  Endif
+  If b4 Then
+    s &= "1"
+  Else
+    s &= "0"
+  Endif
+  If b3 Then
+    s &= "1"
+  Else
+    s &= "0"
+  Endif
+  If b2 Then
+    s &= "1"
+  Else
+    s &= "0"
+  Endif
+  If b1 Then
+    s &= "1"
+  Else
+    s &= "0"
+  Endif
+  Return s
+
+End
+
+Public Sub charToNummber(part As String) As Byte
+
+  Dim i As Integer
+
+  Select part
+    Case "%"
+      i = 27
+    Case "#"
+      i = 30
+    Case "!"
+      i = 26
+    Case "♂"
+      i = 30
+    Case "♀"
+      i = 27
+    Case "+"
+      i = 10
+    Case "-"
+      i = 22
+    Case "."
+      i = 11
+    Case "0"
+      i = 9
+    Case "1"
+      i = 24
+    Case "2"
+      i = 25
+    Case "3"
+      i = 28
+    Case "4"
+      i = 16
+    Case "5"
+      i = 17
+    Case "6"
+      i = 1
+    Case "7"
+      i = 2
+    Case "8"
+      i = 6
+    Case "9"
+      i = 7
+    Case "?"
+      i = 0
+    Case "C"
+      i = 19
+    Case "F"
+      i = 8
+    Case "H"
+      i = 20
+    Case "J"
+      i = 21
+    Case "K"
+      i = 23
+    Case "M"
+      i = 18
+    Case "N"
+      i = 3
+    Case "P"
+      i = 4
+    Case "Q"
+      i = 29
+    Case "R"
+      i = 5
+    Case "S"
+      i = 12
+    Case "T"
+      i = 13
+    Case "W"
+      i = 31
+    Case "X"
+      i = 14
+    Case "Y"
+      i = 15
+  End Select
+  Return i
+
+End
+
+Public Sub calc5BitTo15BytePass(arrayOf5Bits As String[]) As String[]
+
+  Dim s As String
+  Dim bits As String
+  Dim bytes15 As New String[]
+  Dim i As Integer
+
+  For Each s In arrayOf5Bits
+    i = (Len(bits) - 8) * -1
+    If i = 0 Then
+      bytes15.Add(bits)
+      bits = ""
+      bits = Right$(s, 8) & bits
+    Else If i > 0 And i < 5 Then
+
+      bits = Right$(s, i) & bits
+      bytes15.Add(bits)
+      bits = ""
+      bits = Left$(s, 5 - i) & bits
+
+    Else If i > 4 Then
+
+      bits = Right$(s, i) & bits
+
+    Endif
+
+  Next
+  i = (Len(bits) - 8) * -1
+  While i > 0
+    i -= 1
+    bits = 0 & bits
+  Wend
+  bytes15.Add(bits)
+  Return bytes15
+
+End
+
+Public Sub CalcCkecksum(bytes15 As String[]) As Boolean
+
+  Dim b As Byte[]
+  Dim i As Integer
+  Dim sum As Integer
+
+  b = calcToByte(bytes15)
+
+  For I = 1 To b.Length - 1
+
+    sum = sum + b[i] + i
+    If sum > 255 Then sum -= 256
+
+  Next
+  Print sum
+  Return sum = b[0]
+
+End
+
+Public Sub calcToByte(bytes15 As String[]) As Byte[]
+
+  Dim s As String
+  Dim i As Byte
+  Dim e As New Byte[]
+
+  For Each s In bytes15
+    If Right$(Left$(s)) = "1" Then i += 128
+    If Right$(Left$(s, 2)) = "1" Then i += 64
+    If Right$(Left$(s, 3)) = "1" Then i += 32
+    If Right$(Left$(s, 4)) = "1" Then i += 16
+    If Right$(Left$(s, 5)) = "1" Then i += 8
+    If Right$(Left$(s, 6)) = "1" Then i += 4
+    If Right$(Left$(s, 7)) = "1" Then i += 2
+    If Right$(Left$(s, 8)) = "1" Then i += 1
+    e.add(i)
+    i = 0
+  Next
+  Return e
+
+End

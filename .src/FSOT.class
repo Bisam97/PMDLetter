@@ -1,0 +1,17 @@
+' Gambas class file
+
+Private $letter As SOTLetter
+
+Public Sub Button1_Click()
+  
+  $Letter = New SOTLetter(ASOSCode.Text)
+  If $letter.Checksum < 256 Then 
+    LName.Text = "Name:     " & MAll.Pokemon[$letter.PokemonToResID] & "(" & $letter.PokemonNick & ")"
+    LCave.Text = "Location: " & $letter.Dougeon[$letter.DoungeonID] & " Floar " & $letter.Floar
+    Lid.Text = "ID:       " & $letter.MailID
+    LSeekingID.Text = $letter.ressID
+  Endif
+Catch
+  Message.Error(Error.Text)
+  
+End

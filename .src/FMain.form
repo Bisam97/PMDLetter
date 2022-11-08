@@ -1,0 +1,17 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,52,14)
+  { Button1 Button
+    MoveScaled(1,1,16,12)
+    Text = ("SOS letter\nTo\nOk letter\nto\nThank letter")
+  }
+  { Button2 Button
+    MoveScaled(18,1,16,12)
+    Text = ("SOS letter Gen\n+\nThank letter")
+  }
+  { Button3 Button
+    MoveScaled(35,1,16,12)
+    Text = ("Wonder\nletter")
+  }
+}
