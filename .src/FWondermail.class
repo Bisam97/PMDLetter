@@ -1,2 +1,42 @@
 ' Gambas class file
 
+Private $Letter As CWMail
+
+Public Sub Form_Open()
+  
+End
+
+Public Sub Button1_Click()
+  
+  $Letter = New CWMail(AWondermailCode.Text)
+  If $letter.Checksum < 256 Then 
+    LClient.Text = "Client:     " & MAll.Pokemon[$letter.Client] 
+    LCave.Text = "Location: " & $letter.Dougeon[$letter.dungeon] & " Floor " & $letter.Floor
+    LMailType.Text = MissionType($letter.missonType)
+    Lreward.Text = $letter.ressID
+  Endif
+Catch
+  Message.Error(Error.Text)
+  
+End
+
+Public Sub MissionType(i As Integer) As String
+  
+  Select i
+    Case 0
+      Return "Help me!"
+    Case 1
+      Lsearch.Foreground Color.Red
+      Lsearch.Text = MAll.Pokemon[$letter.Target]
+      Return "Find "
+    Case 2
+      Lsearch.Foreground Color.Red
+      Lsearch.Text = MAll.Pokemon[$letter.Target]
+      Return "Escort to"
+    Case 3
+      Lsearch.Foreground Color.Red
+      Lsearch.Text = MAll.Pokemon[$letter.Target]
+      Return "Find "
+  End Select
+  
+End

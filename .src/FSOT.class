@@ -15,3 +15,9 @@ Catch
   Message.Error(Error.Text)
   
 End
+
+Public Sub Form_Open()
+
+  
+
+End

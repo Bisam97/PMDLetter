@@ -1,2 +1,33 @@
 ' Gambas module file
 
+Public Sub toPassWMforming(letter As String[]) As String[]
+  
+  Dim pass As New String[24]
+  
+  pass[12] = letter[0]
+  pass[20] = letter[1]
+  pass[9] = letter[2]
+  pass[17] = letter[3]
+  pass[4] = letter[4]
+  pass[15] = letter[5]
+  pass[1] = letter[6]
+  pass[23] = letter[7]
+  pass[3] = letter[8]
+  pass[7] = letter[9]
+  pass[19] = letter[10]
+  pass[14] = letter[11]
+  pass[0] = letter[12]
+  pass[5] = letter[13]
+  pass[21] = letter[14]
+  pass[6] = letter[15]
+  pass[8] = letter[16]
+  pass[18] = letter[17]
+  pass[11] = letter[18]
+  pass[2] = letter[19]
+  pass[10] = letter[20]
+  pass[13] = letter[21]
+  pass[22] = letter[22]
+  pass[16] = letter[23]
+  Return pass
+  
+End

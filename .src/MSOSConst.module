@@ -3,9 +3,9 @@
 ''54 SOS Letter Constanden changeing
 
 Public Sub toPassSOSforming(letter As String[]) As String[]
-
+  
   Dim pass As New String[54]
-
+  
   pass[23] = letter[0]
   pass[16] = letter[1]
   pass[37] = letter[2]
@@ -61,5 +61,5 @@ Public Sub toPassSOSforming(letter As String[]) As String[]
   pass[43] = letter[52]
   pass[24] = letter[53]
   Return pass
-
+  
 End

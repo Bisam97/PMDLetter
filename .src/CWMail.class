@@ -1,1 +1,92 @@
 ' Gambas class file
+
+Private $Checksum As String
+Private $Bytes As String[]
+Property Read MailType As Integer
+Property Read missonType As Integer
+Property Read Unknown As Integer
+Property Read Client As Integer
+Property Read Target As Integer
+Property Read Item_to_find As Integer
+Property Read reward_type As Integer
+Property Read item_reward As Integer
+Property Read friend_area_reward As Integer
+Property Read unknow_safe_to_set_3bytes_255 As Integer
+Property Read dungeon As Integer
+Property Read Floor As Integer
+
+Public Sub _new(SOSLetter As String)
+  
+  Dim pass As String[]
+  
+  pass = MAll.fromCodeToPassToBit(SOSLetter)
+  
+  If MAll.CalcCkecksum(pass)
+    
+    $Checksum = pass[0]
+    pass.Remove(0)
+    $Bytes = pass
+  Else
+    Message.Error("The Code is not correct")
+    $Checksum = "11111"
+  Endif
+  
+End
+
+Private Function MailType_Read() As Integer
+  
+  Dim s As String
+  Dim i As Integer
+  
+  s = Right($Bytes[0], 4)
+  If Right$(Left$(s, 1)) = "1" Then i += 8
+  If Right$(Left$(s, 2)) = "1" Then i += 4
+  If Right$(Left$(s, 3)) = "1" Then i += 2
+  If Right$(Left$(s, 4)) = "1" Then i += 1
+  Return i
+  
+End
+
+Private Function missonType_Read() As Integer
+  
+End
+
+Private Function Unknown_Read() As Integer
+  
+End
+
+Private Function Client_Read() As Integer
+  
+End
+
+Private Function Target_Read() As Integer
+  
+End
+
+Private Function Item_to_find_Read() As Integer
+  
+End
+
+Private Function reward_type_Read() As Integer
+  
+End
+
+Private Function item_reward_Read() As Integer
+  
+End
+
+Private Function friend_area_reward_Read() As Integer
+  
+End
+
+Private Function unknow_safe_to_set_3bytes_255_Read() As Integer
+  
+End
+
+Private Function dungeon_Read() As Integer
+  
+End
+
+Private Function Floor_Read() As Integer
+  
+End

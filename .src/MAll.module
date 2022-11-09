@@ -1,37 +1,45 @@
 ' Gambas module file
 
 Public Sub fromCodeToPassToBit(Letter As String) As String[]
-
+  
   Dim a As String
   Dim s As String[]
   Dim bits As String[]
-
+  
   Dim i As Byte
-
+  
   s = []
   bits = []
   For i = letter.len DownTo 1
-
-    a = Left(Right(letter, i))
-    If a Then
-      If a = " " Then
-
-      Else
-
+    
+    a = String.Left(String.Right(letter, i))
+    Select a 
+        
+      Case " " 
+        
+      Case "\n"
+        
+      Default  
+        
         s.Add(a)
-      Endif
-    Endif
+    End Select
+    
   Next
-
-  s = MSOSConst.toPassSOSforming(s)
+  If s.Length == 24 Then 
+    
+    s = MWondermailConst.toPassWMforming(s)
+  Else If s.Length == 54 Then 
+    
+    s = MSOSConst.toPassSOSforming(s)
+  Endif
   For Each a In s
     i = MAll.charToNummber(a)
     a = MAll.NummberTo5Bit(i)
     bits.Add(a)
   Next
-
+  
   Return MAll.calc5BitTo15BytePass(bits)
-
+  
 End
 
 Public Pokemon As String[] = [
@@ -462,16 +470,16 @@ Public Pokemon As String[] = [
 ]
 
 Public Sub NummberTo5Bit(n As Byte) As String
-
+  
   Dim b1 As Boolean
   Dim b2 As Boolean
   Dim b3 As Boolean
   Dim b4 As Boolean
   Dim b5 As Boolean
   Dim s As String
-
+  
   If n > 31 Then Return "00000"
-
+  
   While n > 0
     n -= 1
     If b1 Then
@@ -483,21 +491,21 @@ Public Sub NummberTo5Bit(n As Byte) As String
             b3 = False
             b4 = False
             b5 = True
-
+            
           Else
-
+            
             b4 = True
           Endif
           b1 = False
           b2 = False
           b3 = False
-
+          
         Else
           b3 = True
         Endif
         b1 = False
         b2 = False
-
+        
       Else
         b2 = True
       Endif
@@ -506,7 +514,7 @@ Public Sub NummberTo5Bit(n As Byte) As String
       b1 = True
     Endif
   Wend
-
+  
   If b5 Then
     s &= "1"
   Else
@@ -533,17 +541,17 @@ Public Sub NummberTo5Bit(n As Byte) As String
     s &= "0"
   Endif
   Return s
-
+  
 End
 
 Public Sub charToNummber(part As String) As Byte
-
+  
   Dim i As Integer
-
+  
   Select part
-    Case "%"
+    Case "%" ''weiblich
       i = 27
-    Case "#"
+    Case "#" ''mänlich
       i = 30
     Case "!"
       i = 26
@@ -555,6 +563,8 @@ Public Sub charToNummber(part As String) As Byte
       i = 10
     Case "-"
       i = 22
+    Case "…"
+      i = 11
     Case "."
       i = 11
     Case "0"
@@ -611,16 +621,16 @@ Public Sub charToNummber(part As String) As Byte
       i = 15
   End Select
   Return i
-
+  
 End
 
 Public Sub calc5BitTo15BytePass(arrayOf5Bits As String[]) As String[]
-
+  
   Dim s As String
   Dim bits As String
   Dim bytes15 As New String[]
   Dim i As Integer
-
+  
   For Each s In arrayOf5Bits
     i = (Len(bits) - 8) * -1
     If i = 0 Then
@@ -628,18 +638,18 @@ Public Sub calc5BitTo15BytePass(arrayOf5Bits As String[]) As String[]
       bits = ""
       bits = Right$(s, 8) & bits
     Else If i > 0 And i < 5 Then
-
+      
       bits = Right$(s, i) & bits
       bytes15.Add(bits)
       bits = ""
       bits = Left$(s, 5 - i) & bits
-
+      
     Else If i > 4 Then
-
+      
       bits = Right$(s, i) & bits
-
+      
     Endif
-
+    
   Next
   i = (Len(bits) - 8) * -1
   While i > 0
@@ -648,34 +658,34 @@ Public Sub calc5BitTo15BytePass(arrayOf5Bits As String[]) As String[]
   Wend
   bytes15.Add(bits)
   Return bytes15
-
+  
 End
 
 Public Sub CalcCkecksum(bytes15 As String[]) As Boolean
-
+  
   Dim b As Byte[]
   Dim i As Integer
   Dim sum As Integer
-
+  
   b = calcToByte(bytes15)
-
+  
   For I = 1 To b.Length - 1
-
+    
     sum = sum + b[i] + i
     If sum > 255 Then sum -= 256
-
+    
   Next
   Print sum
   Return sum = b[0]
-
+  
 End
 
 Public Sub calcToByte(bytes15 As String[]) As Byte[]
-
+  
   Dim s As String
   Dim i As Byte
   Dim e As New Byte[]
-
+  
   For Each s In bytes15
     If Right$(Left$(s)) = "1" Then i += 128
     If Right$(Left$(s, 2)) = "1" Then i += 64
@@ -689,5 +699,5 @@ Public Sub calcToByte(bytes15 As String[]) As Byte[]
     i = 0
   Next
   Return e
-
+  
 End
