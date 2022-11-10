@@ -1,7 +1,13 @@
 ' Gambas class file
 
 Public Sub Button1_Click()
-
+  
   FSOT.show()
+  
+End
 
+Public Sub Button3_Click()
+  
+  FWondermail.Show()
+  
 End

@@ -18,7 +18,7 @@
       MoveScaled(1,5,33,4)
     }
     { LCave Label
-      MoveScaled(1,9,33,4)
+      MoveScaled(1,9,55,4)
     }
     { LMailType Label
       MoveScaled(1,13,15,4)

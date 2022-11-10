@@ -11,9 +11,12 @@ Property Read Item_to_find As Integer
 Property Read reward_type As Integer
 Property Read item_reward As Integer
 Property Read friend_area_reward As Integer
-Property Read unknow_safe_to_set_3bytes_255 As Integer
-Property Read dungeon As Integer
+Property Read unknow_safe_to_set_3bytes_255 As Integer[]
+Property Read dungeonid As Integer
 Property Read Floor As Integer
+Property Read Checksum As Integer
+Property Read Dougeon As String[]
+Property Read Raw As String[]
 
 Public Sub _new(SOSLetter As String)
   
@@ -49,44 +52,242 @@ End
 
 Private Function missonType_Read() As Integer
   
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right(Left($Bytes[0], 4), 3)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 4
+  If Right$(Left$(s, 2)) = "1" Then i += 2
+  If Right$(Left$(s, 3)) = "1" Then i += 1
+  Return i
+  
 End
 
 Private Function Unknown_Read() As Integer
+  
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right($Bytes[1], 3) & Left($Bytes[0], 1)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 8
+  If Right$(Left$(s, 2)) = "1" Then i += 4
+  If Right$(Left$(s, 3)) = "1" Then i += 2
+  If Right$(Left$(s, 4)) = "1" Then i += 1
+  Return i
   
 End
 
 Private Function Client_Read() As Integer
   
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right($Bytes[2], 4) & Left($Bytes[1], 5)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 256
+  If Right$(Left$(s, 2)) = "1" Then i += 128
+  If Right$(Left$(s, 3)) = "1" Then i += 64
+  If Right$(Left$(s, 4)) = "1" Then i += 32
+  If Right$(Left$(s, 5)) = "1" Then i += 16
+  If Right$(Left$(s, 6)) = "1" Then i += 8
+  If Right$(Left$(s, 7)) = "1" Then i += 4
+  If Right$(Left$(s, 8)) = "1" Then i += 2
+  If Right$(Left$(s, 9)) = "1" Then i += 1
+  Return i
+  
 End
 
 Private Function Target_Read() As Integer
+  
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right($Bytes[3], 5) & Left($Bytes[2], 4)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 256
+  If Right$(Left$(s, 2)) = "1" Then i += 128
+  If Right$(Left$(s, 3)) = "1" Then i += 64
+  If Right$(Left$(s, 4)) = "1" Then i += 32
+  If Right$(Left$(s, 5)) = "1" Then i += 16
+  If Right$(Left$(s, 6)) = "1" Then i += 8
+  If Right$(Left$(s, 7)) = "1" Then i += 4
+  If Right$(Left$(s, 8)) = "1" Then i += 2
+  If Right$(Left$(s, 9)) = "1" Then i += 1
+  Return i
   
 End
 
 Private Function Item_to_find_Read() As Integer
   
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right($Bytes[4], 5) & Left($Bytes[3], 3)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 128
+  If Right$(Left$(s, 2)) = "1" Then i += 64
+  If Right$(Left$(s, 3)) = "1" Then i += 32
+  If Right$(Left$(s, 4)) = "1" Then i += 16
+  If Right$(Left$(s, 5)) = "1" Then i += 8
+  If Right$(Left$(s, 6)) = "1" Then i += 4
+  If Right$(Left$(s, 7)) = "1" Then i += 2
+  If Right$(Left$(s, 8)) = "1" Then i += 1
+  Return i
+  
 End
 
 Private Function reward_type_Read() As Integer
+  
+  Dim s As String
+  Dim i As Integer
+  
+  s = Right($Bytes[5], 1) & Left($Bytes[4], 3)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 8
+  If Right$(Left$(s, 2)) = "1" Then i += 4
+  If Right$(Left$(s, 3)) = "1" Then i += 2
+  If Right$(Left$(s, 4)) = "1" Then i += 1
+  Return i
   
 End
 
 Private Function item_reward_Read() As Integer
   
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right($Bytes[6], 1) & Left($Bytes[5], 7)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 128
+  If Right$(Left$(s, 2)) = "1" Then i += 64
+  If Right$(Left$(s, 3)) = "1" Then i += 32
+  If Right$(Left$(s, 4)) = "1" Then i += 16
+  If Right$(Left$(s, 5)) = "1" Then i += 8
+  If Right$(Left$(s, 6)) = "1" Then i += 4
+  If Right$(Left$(s, 7)) = "1" Then i += 2
+  If Right$(Left$(s, 8)) = "1" Then i += 1
+  Return i
+  
 End
 
 Private Function friend_area_reward_Read() As Integer
   
-End
-
-Private Function unknow_safe_to_set_3bytes_255_Read() As Integer
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right(Left($Bytes[6], 7), 6)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 32
+  If Right$(Left$(s, 2)) = "1" Then i += 16
+  If Right$(Left$(s, 3)) = "1" Then i += 8
+  If Right$(Left$(s, 4)) = "1" Then i += 4
+  If Right$(Left$(s, 5)) = "1" Then i += 2
+  If Right$(Left$(s, 6)) = "1" Then i += 1
+  Return i
   
 End
 
-Private Function dungeon_Read() As Integer
+Private Function unknow_safe_to_set_3bytes_255_Read() As Integer[]
+  
+  Dim ss As New String[]
+  
+  Dim s As String
+  Dim i As Integer
+  Dim r As New Integer[]
+  
+  s = Right($Bytes[7], 7) & Left($Bytes[6], 1)
+  ss.Add(s)
+  s = Right($Bytes[8], 7) & Left($Bytes[7], 1)
+  ss.Add(s)
+  s = Right($Bytes[9], 7) & Left($Bytes[8], 1)
+  ss.Add(s)
+  
+  For Each s In ss
+    i = 0
+    If Right$(Left$(s, 1)) = "1" Then i += 128
+    If Right$(Left$(s, 2)) = "1" Then i += 64
+    If Right$(Left$(s, 3)) = "1" Then i += 32
+    If Right$(Left$(s, 4)) = "1" Then i += 16
+    If Right$(Left$(s, 5)) = "1" Then i += 8
+    If Right$(Left$(s, 6)) = "1" Then i += 4
+    If Right$(Left$(s, 7)) = "1" Then i += 2
+    If Right$(Left$(s, 8)) = "1" Then i += 1
+    r.Add(i)
+    
+  Next
+  Return r
+  
+End
+
+Private Function dungeonid_Read() As Integer
+  
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right($Bytes[10], 6) & Left($Bytes[9], 1)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 64
+  If Right$(Left$(s, 2)) = "1" Then i += 32
+  If Right$(Left$(s, 3)) = "1" Then i += 16
+  If Right$(Left$(s, 4)) = "1" Then i += 8
+  If Right$(Left$(s, 5)) = "1" Then i += 4
+  If Right$(Left$(s, 6)) = "1" Then i += 2
+  If Right$(Left$(s, 7)) = "1" Then i += 1
+  Return i
   
 End
 
 Private Function Floor_Read() As Integer
+  
+  Dim i As Integer
+  Dim s As String
+  
+  s = Right($Bytes[11], 5) & Left($Bytes[10], 2)
+  
+  If Right$(Left$(s, 1)) = "1" Then i += 64
+  If Right$(Left$(s, 2)) = "1" Then i += 32
+  If Right$(Left$(s, 3)) = "1" Then i += 16
+  If Right$(Left$(s, 4)) = "1" Then i += 8
+  If Right$(Left$(s, 5)) = "1" Then i += 4
+  If Right$(Left$(s, 6)) = "1" Then i += 2
+  If Right$(Left$(s, 7)) = "1" Then i += 1
+  Return i
+  
+End
+
+Private Function Dougeon_Read() As String[]
+  
+  Return ["Tiny Woods", "Thunderwave Cave", "Mt. Steel", "Sinister Woods", "Silent Chasm", "Mt. Thunder", "Mt. Thunder Peak", "Great Canyon", "Lapis Cave", "Mt. Blaze", "Mt. Blaze Peak", "Frosty Forest", "Frosty Grotto", "Mt. Freeze", "Mt. Freeze Peak", "Magma Cavern", "Magma Cavern Pit", "Sky Tower", "Sky Tower Summit", "Stormy Sea", "Silver Trench", "Meteor Cave", "Mt. Freeze Peak", "Western Cave", "Boss 3", "Boss 4", "Wish Cave", "Buried Relic", "Pitfall Valley", "Northern Range", "Boss 9", "Desert Region", "Southern Cavern", "Wyvern Hill", "Fiery Field", "Northwind Field", "Solar Cave", "Lightning Field", "Darknight Relic", "Wondrous Sea", "Murky Cave", "Grand Sea", "Uproar Forest", "Oddity Cave", "Remains Island", "Marvelous Sea", "Fantasy Strait", "Rock Path", "Snow Path", "Autopilot", "D50", "D51", "Dojo Registration", "Howling Forest", "D54", "Fantasy Strait", "Waterfall Pond", "Unown Relic", "Joyous Tower", "Far-off Sea", "Mt. Faraway", "D61", "Purity Forest", "Out on Rescue", "???", "Tiny Woods", "Unknown World", "Frosty Grotto", "Howling Forest", "Pokémon Square", "Pokémon Square", "Rescue Team Base", "Rescue Team Base", "****agb-slot ", "Client Pokémon", "Normal Maze", "Fire Maze", "Water Maze", "Grass Maze", "Electric Maze", "Ice Maze", "Fighting Maze", "Ground Maze", "Flying Maze", "Psychic Maze", "Poison Maze", "Bug Maze", "Rock Maze", "Ghost Maze", "Dragon Maze", "Dark Maze", "Steel Maze", "Team Shifty", "Team Constrictor", "Team Hydro", "Team Rumblerock", "Rescue Team 2", "Rescue Team Maze"]
+  
+End
+
+Private Function Checksum_Read() As Integer
+  
+  Dim i As Integer
+  Dim ri As Integer
+  Dim r As String
+  
+  For i = $Checksum.len - 1 DownTo 0
+    
+    r = Left(Right($Checksum, i + 1))
+    If r = "1" Then ri += 2 ^ i
+    
+  Next
+  Return ri
+  
+End
+
+Private Function Raw_Read() As String[]
+  
+  ' Dim s As String
+  ' Dim r As String
+  ' 
+  ' For Each s In $Bytes
+  '   r &= s & " "
+  ' Next
+  ' Return s
+  Return $Bytes
   
 End

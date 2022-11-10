@@ -11,9 +11,9 @@ Public Sub Button1_Click()
   $Letter = New CWMail(AWondermailCode.Text)
   If $letter.Checksum < 256 Then 
     LClient.Text = "Client:     " & MAll.Pokemon[$letter.Client] 
-    LCave.Text = "Location: " & $letter.Dougeon[$letter.dungeon] & " Floor " & $letter.Floor
+    LCave.Text = "Location: " & $letter.Dougeon[$letter.dungeonid] & " Floor " & $letter.Floor
     LMailType.Text = MissionType($letter.missonType)
-    Lreward.Text = $letter.ressID
+    Lreward.Text = $letter.item_reward
   Endif
 Catch
   Message.Error(Error.Text)
@@ -26,15 +26,15 @@ Public Sub MissionType(i As Integer) As String
     Case 0
       Return "Help me!"
     Case 1
-      Lsearch.Foreground Color.Red
+      Lsearch.Foreground = Color.Red
       Lsearch.Text = MAll.Pokemon[$letter.Target]
       Return "Find "
     Case 2
-      Lsearch.Foreground Color.Red
+      Lsearch.Foreground = Color.Red
       Lsearch.Text = MAll.Pokemon[$letter.Target]
       Return "Escort to"
     Case 3
-      Lsearch.Foreground Color.Red
+      Lsearch.Foreground = Color.Red
       Lsearch.Text = MAll.Pokemon[$letter.Target]
       Return "Find "
   End Select

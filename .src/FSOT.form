@@ -6,26 +6,26 @@
     MoveScaled(1,1,38,12)
   }
   { Panel1 Panel
-    MoveScaled(1,14,34,23)
+    MoveScaled(1,14,56,23)
     Font = Font["Gambas,+4"]
     Border = Border.Plain
     { Label1 Label
       MoveScaled(0,1,34,4)
-      Text = ("SOS Letter Info")
       Alignment = Align.Center
+      Text = ("SOS Letter Info")
     }
     { LName Label
       MoveScaled(1,5,33,4)
     }
     { LCave Label
-      MoveScaled(1,9,33,4)
+      MoveScaled(1,9,54,4)
     }
     { Lid Label
       MoveScaled(1,13,24,4)
     }
     { LSeekingID Label
       MoveScaled(1,17,32,4)
-      Mouse = Mouse.Pointing
+      Mouse = Cursor.Pointing
       ToolTip = ("Save your Team ID for the SOS Letter Gen")
     }
   }
